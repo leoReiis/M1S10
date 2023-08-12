@@ -1,17 +1,19 @@
 <template>
-  <form class="main-form" @submit.prevent="onSubmit">
+  <form class="main-form" @submit.prevent="handleSubmit">
     <h1>Cadastro de talento</h1>
     <br>
 
     <span class="form-container">
       <div class="form-item">
         <label for="name">Nome completo</label>
-        <input type="text" id="name" v-model="name">
+        <input id="name" v-model="name">
+        {{ this.errors.name }}
       </div>
 
       <div class="form-item">
         <label for="email">Email </label>
-        <input type="text" id="email" v-model="email">
+        <input type="email" id="email" v-model="email">
+        {{ this.errors.email }}
       </div>
     </span>
 
@@ -35,7 +37,7 @@
         <option value="fullstack">Fullstack</option>
       </select>
     </span>
-
+    {{ this.errors.area }}
 
     <span class="form-item">
       <label for="nivel">Nivel</label>
@@ -67,6 +69,7 @@
       <label>Carta de apresentacao</label>
       <textarea id="text-area" v-model="apresentacao"></textarea>
     </span>
+
     <button type="submit">Cadastrar</button>
 
   </form>
@@ -74,6 +77,10 @@
 
 
 <script>
+import * as yup from 'yup'
+import { captureErrorYup } from '../../utils/captureErroYup'
+
+
 export default {
   data() {
     return {
@@ -84,8 +91,35 @@ export default {
       phone: '',
       birthDate: '',
       email: '',
-      name: ''
+      name: '',
+      errors: {}
 
+    }
+  },
+
+  methods: {
+
+    handleSubmit() {
+      try {
+        const schema = yup.object().shape({
+          name: yup.string().required('O nome é obrigatório').min(10, 'O tamanho mínimo do nome é 10 caracteres'),
+          email: yup.string().email('Email inválido').required('Email é obrigatório'),
+          area: yup.string().required('Campo área é obrigatório')
+        })
+
+        schema.validateSync({
+          name: this.name,
+          email: this.email,
+          area: this.area
+        }, { abortEarly: false }
+        )
+
+      } catch (error) {
+        if (error instanceof yup.ValidationError) {
+          debugger
+          this.errors = captureErrorYup(error)
+        }
+      }
     }
   },
 
@@ -103,7 +137,7 @@ export default {
 .main-form {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 50%;
   align-items: center;
   gap: 15px;
 }
