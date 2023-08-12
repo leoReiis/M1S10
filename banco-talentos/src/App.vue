@@ -1,47 +1,55 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <div class="page-container">
+    <div class="nav-bar">
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <div class="nav-item">
+        <a href="">Home</a>
+        <img src="/home.png" alt="Home" height="30" width="30">
+      </div>
+
+      <div class="nav-item">
+        <a href="">Talentos</a>
+        <img src="/talento.png" alt="Home" height="30" width="30">
+      </div>
+
+      <div class="nav-item">
+        <a href="">Sobre</a>
+        <img src="/sobre.png" alt="Home" height="30" width="30">
+      </div>
     </div>
-  </header>
 
-  <main>
-    <TheWelcome />
-  </main>
+    <br><br><br><br>
+    <About></About>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<script>
+import About from './views/about/About.vue'
+
+export default {
+  components: { About }
+}
+</script>
+
+
+<style>
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.nav-bar {
+  display: flex;
+  gap: 50px;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.nav-item {
+  border: solid 2px #9EADBA;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 150px;
+  height: 40px;
 }
 </style>
