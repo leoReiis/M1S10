@@ -1,14 +1,16 @@
 <template>
   <div>
-    <h1>Banco de talentos</h1>
+    <h1>Cadastro de Novo Talento</h1>
   </div>
 </template>
-
 <script>
+
+
 export default {
 
 }
 </script>
 
 
-<style></style>
+
+<style scoped></style>
